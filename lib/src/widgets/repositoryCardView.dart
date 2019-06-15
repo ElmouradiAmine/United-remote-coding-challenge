@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:github_trend/src/common/constants.dart';
+import 'package:github_trend/src/models/repositoryModel.dart';
 
 class RepositoryCardView extends StatelessWidget {
+  final RepositoryModel repositoryModel;
+
+  const RepositoryCardView(this.repositoryModel);
+
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,16 +21,15 @@ class RepositoryCardView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-            _buildTitle('Tensorflow'),
-            _buildBody('Computation using data flow graphs for scalable machine learning'),
+            _buildTitle(repositoryModel.getTitle()),
+            _buildBody(repositoryModel.getDescription()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  _buildRepoOwnerWidget('tensorflow'),
-                  _buildRatingWidget('5.1k'),
+                  _buildRepoOwnerWidget(repositoryModel.getRepoOwnerName()),
+                  _buildRatingWidget(repositoryModel.getStars()),
                 ],
               )
-
             ],
           ),
         ),
@@ -38,10 +44,10 @@ class RepositoryCardView extends StatelessWidget {
         color: kTitleColor,
       ),);
   }
-  Widget _buildBody(String text){
+  Widget _buildBody(String description){
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 12.0),
-      child: Text(text,style: TextStyle(
+      child: Text(description,style: TextStyle(
         fontWeight: kBodyFontWeight,
         fontSize: kBodySize,
         color: kBodyColor,
@@ -61,12 +67,12 @@ class RepositoryCardView extends StatelessWidget {
       ],
     );
   }
-  Widget _buildRatingWidget(String rating){
+  Widget _buildRatingWidget(int rating){
     return Row(
       children: <Widget>[
         Icon(Icons.star),
         SizedBox(width: 4,),
-        Text(rating,style: TextStyle(
+        Text(rating.toString(),style: TextStyle(
           fontWeight: kRatingLabelFontWeight,
           fontSize: kRatingLabelSize,
           color: kRatingLabelColor,
