@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:github_trend/src/widget/repositoryCardView.dart';
+import 'package:github_trend/src/pages/homeListView.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -14,11 +14,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Trending Repos'),
       ),
-      body: ListView(
-        children: <Widget>[
-          RepositoryCardView(),
-        ],
+      body: MyHomePageListView(
+
       ),
+
     );
   }
 }
