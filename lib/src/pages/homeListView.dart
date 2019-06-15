@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:github_trend/src/widgets/repositoryCardView.dart';
 import 'package:github_trend/src/models/repositoryModel.dart';
+import 'package:github_trend/src/api/api.dart';
 
 class MyHomePageListView extends StatefulWidget {
   @override
@@ -11,39 +10,65 @@ class MyHomePageListView extends StatefulWidget {
 }
 
 class _MyHomePageListViewState extends State<MyHomePageListView> {
-  final String url =
-      "https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc";
-  List data;
-  bool isLoading = true;
+  ScrollController _scrollController = ScrollController();
+  bool isLoading;
+  List<RepositoryModel> repositories = List<RepositoryModel>();
+  int currentPage = 1;
 
-  Future<String> getRepo() async {
-    var res = await http.get(url);
-    print(res.body);
+  fetchRepo() async {
     setState(() {
-      var resBody = json.decode(res.body);
-      data = resBody["items"];
-      isLoading = false;
+      isLoading = true;
     });
-    return "Success";
+    var res = await Api.getRepos(currentPage);
+    setState(() {
+      for (int i = 0; i < res.length; i++) {
+        repositories.add(RepositoryModel.fromJson(res[i]));
+      }
+      isLoading = false;
+      currentPage++;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading ? Center(
-      child: CircularProgressIndicator(),
-    ) : ListView.builder(
-        itemCount: data!= null ? data.length : 0,
-        itemBuilder: (context,index){
-          return RepositoryCardView(
-            RepositoryModel.fromJson(data[index])
-          );
-        });
-
+    return Center(
+      child: ListView(
+        controller: _scrollController,
+        shrinkWrap: true,
+        children: <Widget>[]
+          ..addAll(repositories.map((model) {
+            return RepositoryCardView(model);
+          }).toList())
+          ..add(Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Container(
+                    height: 0,
+                    width: 0,
+                  ),
+          )),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    getRepo();
+    fetchRepo();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        fetchRepo();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 }

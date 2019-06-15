@@ -8,14 +8,12 @@ class RepositoryCardView extends StatelessWidget {
 
   const RepositoryCardView(this.repositoryModel);
 
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(4.0),
       child: Material(
-        elevation: 5.0,
+        elevation: 4.0,
         child: Container(
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -57,7 +55,9 @@ class RepositoryCardView extends StatelessWidget {
   Widget _buildRepoOwnerWidget(String repoOwnerName){
     return Row(
       children: <Widget>[
-        Icon(Icons.image),
+        CircleAvatar(
+        backgroundImage: NetworkImage(repositoryModel.getRepoOwnerAvatarUrl()),
+    ),
         SizedBox(width: 4,),
         Text(repoOwnerName,style: TextStyle(
           fontWeight: kOwnerNameFontWeight,

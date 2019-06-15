@@ -13,7 +13,7 @@ class RepositoryModel {
     _description = map['description'];
     _repoOwnerName = map["owner"]['login'];
 
-    _repoOwnerAvatarUrl = map['avatar_url'];
+    _repoOwnerAvatarUrl = map["owner"]['avatar_url'];
     _stars = map["stargazers_count"];
   }
 
