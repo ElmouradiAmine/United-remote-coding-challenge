@@ -1,6 +1,17 @@
-# github_trend
+# United Remote mobile app challenge.
+This is my implementation of the united remote mobile app challenge https://github.com/hiddenfounders/mobile-coding-challenge.
 
-A new Flutter application.
+# Tools used
+Android studio , dart language and the framework flutter.
+
+# Install flutter sdk
+Installing flutter is really easy task it won't take more than 5 minutes check this website :
+https://flutter.dev/docs/get-started/install
+
+# App screenshots
+![](https://github.com/ElmouradiAmine/United-remote-coding-challenge/blob/master/screenshots/screenshot2.jpeg)
+![](https://github.com/ElmouradiAmine/United-remote-coding-challenge/blob/master/screenshots/screenshot3.jpeg)
+![](https://github.com/ElmouradiAmine/United-remote-coding-challenge/blob/master/screenshots/screenshot1.jpeg)
 
 ## Getting Started
 
