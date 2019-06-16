@@ -45,10 +45,9 @@ class _MyHomePageListViewState extends State<MyHomePageListView> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : Container(
-                    height: 0,
-                    width: 0,
-                  ),
+                : Center(
+              child: CircularProgressIndicator(),
+            ),
           )),
       ),
     );
