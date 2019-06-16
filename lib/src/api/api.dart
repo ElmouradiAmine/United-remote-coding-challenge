@@ -4,10 +4,12 @@ import 'dart:convert';
 
 class Api {
 
-  static String url = "https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc";
+
 
   static getRepos(currentPage) async {
-    var res = await http.get(url+"&page=$currentPage");
+    DateTime date = DateTime.now();
+    date.subtract(Duration(days: 30));
+    var res = await http.get("https://api.github.com/search/repositories?q=created:>${date.year}-${date.month}-${date.day}&sort=stars&order=desc&page=$currentPage");
     var resBody = res.body;
     var resDecode = jsonDecode(resBody);
     return resDecode["items"];
